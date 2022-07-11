@@ -23,7 +23,7 @@ model boards {
   id              Int           @id @default(autoincrement())
   user_id         Int
   title           String?       @db.VarChar(500)
-  cover_image_url String?       @db.VarChar(3000)
+  cover_image_url String?       @db.VarChar(2000)
   intro           String?       @db.Text
   created_at      DateTime      @default(now()) @db.Timestamp(0)
   users           users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "boards_ibfk_1")
@@ -49,7 +49,7 @@ model comment_like {
 model comments {
   id             Int            @id @default(autoincrement())
   pin_id         Int
-  content        String         @db.VarChar(1000)
+  content        String         @db.VarChar(500)
   user_id        Int
   parent_id      Int
   created_at     DateTime       @default(now()) @db.Timestamp(0)
@@ -114,7 +114,7 @@ model recent_search {
 }
 
 model social_login {
-  access_token String @id @db.VarChar(1000)
+  access_token String @id @db.VarChar(128)
   user_id      Int
   users        users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "social_login_ibfk_1")
 
