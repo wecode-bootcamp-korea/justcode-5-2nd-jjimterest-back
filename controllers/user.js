@@ -8,3 +8,12 @@ export const signUp = async (req, res) => {
     res.status(errors.statusCode || 500).json({ message: errors.message });
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const token = await userService.login(req.body);
+    res.status(201).json({ message: 'LOGIN SUCCESS', token });
+  } catch (errors) {
+    res.status(errors.statusCode || 500).json({ message: errors.message });
+  }
+};
