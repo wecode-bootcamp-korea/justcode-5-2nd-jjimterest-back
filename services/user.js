@@ -43,42 +43,34 @@ export const login = async body => {
 
   const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
   return token;
-  };
+};
 
 export const kakaoLogin = async code => {
   const userInfo = await getKakaoToken(code);
-  const user = await userRepository.readUserByEmail(
-    userInfo.data.kakao_account.email
-  );
-  if (user) {
-    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+  const id = userInfo.data.id;
+  const socialUser = await userRepository.readUserBySocialId(id);
+  if (socialUser) {
+    const token = jwt.sign({ id: socialUser.user_id }, process.env.SECRET_KEY);
     return token;
   } else {
     const email = userInfo.data.kakao_account.email;
     const nickname = userInfo.data.properties.nickname;
     const profileImage = userInfo.data.kakao_account.profile.profile_image_url;
-
-    return await kakaoSignUp(email, nickname, profileImage);
+    return await kakaoSignUp(email, nickname, profileImage, id);
   }
 };
 
-const kakaoSignUp = async (email, nickname, profileImage) => {
-  const user = await userRepository.readUserByEmail(email);
-  if (user) {
-    const error = new Error('EXISTING_USER');
-    error.statusCode = 400;
-    throw error;
-  } else {
-    const result = await userRepository.createUser(
-      email,
-      null,
-      nickname,
-      nickname,
-      profileImage
-    );
-    const token = jwt.sign({ id: result.id }, process.env.SECRET_KEY);
-    return token;
-  }
+const kakaoSignUp = async (email, nickname, profileImage, id) => {
+  const result = await userRepository.createUser(
+    email,
+    null,
+    nickname,
+    nickname,
+    profileImage
+  );
+  await userRepository.createSocialUser(id, result.id);
+  const token = jwt.sign({ id: result.id }, process.env.SECRET_KEY);
+  return token;
 };
 
 const getKakaoToken = async code => {
