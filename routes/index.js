@@ -5,7 +5,7 @@ import recentSearchRouter from './recent-search.js';
 
 const router = express.Router();
 router.use(userRouter);
-router.use(boardRouter);
 router.use(recentSearchRouter);
+router.use(boardRouter);
 
 export default router;
