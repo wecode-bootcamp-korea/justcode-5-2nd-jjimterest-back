@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import * as userController from '../controllers/user.js';
 import { validate } from '../middleware/validator.js';
 const router = express.Router();
+
 const validateCredential = [
   body('email')
     .notEmpty()
@@ -21,4 +22,6 @@ const validateCredential = [
 
 router.post('/users/signup', validateCredential, userController.signUp);
 
+router.get('/kakao', userController.kakao);
+router.get('/auth/kakao/callback', userController.kakaoLogin);
 export default router;
