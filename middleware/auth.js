@@ -16,7 +16,7 @@ export const isLogin = (req, res, next) => {
     if (!user) {
       return res.status(401).json(AUTH_ERROR);
     }
-    req.userId = user[0].id;
+    req.userId = user.id;
     next();
   });
 };
