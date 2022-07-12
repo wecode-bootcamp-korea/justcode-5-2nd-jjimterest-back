@@ -1,6 +1,6 @@
-import * as pinsController from '../models/pins.js';
+import * as pinsModels from '../models/pins.js';
 
 export async function pinList() {
-  const pins = await pinsController.pinList();
+  const pins = await pinsModels.pinList();
   return pins;
 }
