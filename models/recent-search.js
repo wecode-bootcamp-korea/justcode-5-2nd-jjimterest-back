@@ -8,5 +8,6 @@ export async function serchList(id) {
   ORDER BY created_at desc
   Limit 5;
 `;
+  console.log('recentSearchModels - keywords : ', keywords);
   return keywords;
 }
