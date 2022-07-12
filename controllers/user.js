@@ -18,20 +18,28 @@ export const login = async (req, res) => {
   }
 };
 export const kakao = async (req, res) => {
-  const baseUrl = 'https://kauth.kakao.com/oauth/authorize';
-  const config = {
-    client_id: process.env.CLIENT_ID,
-    redirect_uri: process.env.REDIRECT_URI,
-    response_type: 'code',
-  };
-  const params = new URLSearchParams(config).toString();
-  const finalURI = `${baseUrl}?${params}`;
+  try {
+    const baseUrl = 'https://kauth.kakao.com/oauth/authorize';
+    const config = {
+      client_id: process.env.CLIENT_ID,
+      redirect_uri: process.env.REDIRECT_URI,
+      response_type: 'code',
+    };
+    const params = new URLSearchParams(config).toString();
+    const finalURI = `${baseUrl}?${params}`;
 
-  res.redirect(finalURI);
+    res.redirect(finalURI);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 export const kakaoLogin = async (req, res) => {
-  const code = req.query.code;
-  const result = await userService.kakaoLogin(code);
-  res.redirect(`http://localhost:3000?token=${result}`);
+  try {
+    const code = req.query.code;
+    const result = await userService.kakaoLogin(code);
+    res.redirect(`http://localhost:3000?token=${result}`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
