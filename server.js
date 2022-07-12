@@ -19,9 +19,3 @@ const PORT = process.env.PORT || 10010;
 app.listen(PORT, () => {
   console.log(`server start PORT:${PORT}`);
 });
-
-////////// TEST ///////////////
-app.get('/ping', (req, res) => {
-  res.json({ message: 'pong' });
-});
-///////////////////////////////
