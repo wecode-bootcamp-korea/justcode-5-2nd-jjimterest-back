@@ -47,15 +47,21 @@ export const login = async body => {
 
 export const kakaoLogin = async code => {
   const userInfo = await getKakaoToken(code);
+  const email = userInfo.data.kakao_account.email;
+  const nickname = userInfo.data.properties.nickname;
+  const profileImage = userInfo.data.kakao_account.profile.profile_image_url;
   const id = userInfo.data.id;
+  const user = await userRepository.readUserByEmail(email);
   const socialUser = await userRepository.readUserBySocialId(id);
+  if (user) {
+    await userRepository.createSocialUser(id, user.id);
+    const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY);
+    return token;
+  }
   if (socialUser) {
     const token = jwt.sign({ id: socialUser.user_id }, process.env.SECRET_KEY);
     return token;
   } else {
-    const email = userInfo.data.kakao_account.email;
-    const nickname = userInfo.data.properties.nickname;
-    const profileImage = userInfo.data.kakao_account.profile.profile_image_url;
     return await kakaoSignUp(email, nickname, profileImage, id);
   }
 };
