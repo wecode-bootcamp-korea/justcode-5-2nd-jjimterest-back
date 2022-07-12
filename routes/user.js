@@ -21,6 +21,7 @@ const validateCredential = [
 ];
 
 router.post('/users/signup', validateCredential, userController.signUp);
+router.post('/users/login', validateCredential, userController.login);
 
 router.get('/kakao', userController.kakao);
 router.get('/auth/kakao/callback', userController.kakaoLogin);
