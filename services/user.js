@@ -53,11 +53,13 @@ export const kakaoLogin = async code => {
   const id = userInfo.data.id;
   const user = await userRepository.readUserByEmail(email);
   const socialUser = await userRepository.readUserBySocialId(id);
-  if (user) {
+
+  if (user && !socialUser) {
     await userRepository.createSocialUser(id, user.id);
     const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY);
     return token;
   }
+
   if (socialUser) {
     const token = jwt.sign({ id: socialUser.user_id }, process.env.SECRET_KEY);
     return token;
