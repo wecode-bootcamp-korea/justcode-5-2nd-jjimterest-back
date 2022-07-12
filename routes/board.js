@@ -5,5 +5,6 @@ const router = express.Router();
 router.use(isLogin);
 
 router.post('/board', boardController.createBoard);
+router.put('/board', boardController.updateBoard);
 
 export default router;
