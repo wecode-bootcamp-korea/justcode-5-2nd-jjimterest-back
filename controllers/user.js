@@ -16,7 +16,7 @@ export const login = async (req, res) => {
   } catch (errors) {
     res.status(errors.statusCode || 500).json({ message: errors.message });
   }
-}
+};
 export const kakao = async (req, res) => {
   const baseUrl = 'https://kauth.kakao.com/oauth/authorize';
   const config = {
