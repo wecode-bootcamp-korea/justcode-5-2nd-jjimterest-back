@@ -20,5 +20,6 @@ const validateCredential = [
 ];
 
 router.post('/users/signup', validateCredential, userController.signUp);
+router.post('/users/login', validateCredential, userController.login);
 
 export default router;

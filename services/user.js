@@ -24,3 +24,22 @@ export const signUp = async body => {
 
   return createUser;
 };
+
+export const login = async body => {
+  const { email, password } = body;
+  const user = await userRepository.readUserByEmail(email);
+  if (!user) {
+    const error = new Error('INVALID_USER');
+    error.statusCode = 400;
+    throw error;
+  }
+  const isCorrect = await bcrypt.compare(password, user.password);
+  if (!isCorrect) {
+    const error = new Error('INVALID_USER');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+  return token;
+};
