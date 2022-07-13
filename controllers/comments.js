@@ -24,3 +24,14 @@ export const updateComment = async (req, res) => {
     res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
+
+export const deleteComment = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const commentId = req.params.comment_id;
+    await commentsService.deleteComment(userId, commentId);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
