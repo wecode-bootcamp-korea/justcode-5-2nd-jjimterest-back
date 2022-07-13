@@ -18,3 +18,9 @@ export const updateComment = async (commentId, content) => {
   UPDATE comments SET content=${content} WHERE id=${commentId}
   `;
 };
+
+export const deleteComment = async commentId => {
+  return await prismaClient.$queryRaw`
+  DELETE FROM comments WHERE id=${commentId}
+  `;
+};

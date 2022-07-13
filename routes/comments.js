@@ -7,5 +7,6 @@ router.use(isLogin);
 
 router.post('/comments', commentsController.createComment);
 router.put('/comments', commentsController.updateComment);
+router.delete('/comments/:comment_id', commentsController.deleteComment);
 
 export default router;
