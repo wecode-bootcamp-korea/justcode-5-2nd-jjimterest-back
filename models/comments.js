@@ -6,3 +6,15 @@ export const createComment = async (userId, parentId, pinId, content) => {
     pinId
   )},${content})`;
 };
+
+export const readCommentsById = async commentId => {
+  return await prismaClient.$queryRaw`
+  SELECT * FROM comments WHERE id=${commentId};
+  `;
+};
+
+export const updateComment = async (commentId, content) => {
+  return await prismaClient.$queryRaw`
+  UPDATE comments SET content=${content} WHERE id=${commentId}
+  `;
+};

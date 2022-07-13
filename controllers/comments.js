@@ -12,3 +12,15 @@ export const createComment = async (req, res) => {
     res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
+
+export const updateComment = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const commentId = req.body.comment_id;
+    const content = req.body.content;
+    await commentsService.updateComment(userId, commentId, content);
+    res.status(200).json({ message: 'SUCCESS' });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
