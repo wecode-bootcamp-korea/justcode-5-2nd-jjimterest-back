@@ -27,3 +27,24 @@ group by pin_id,user.count;
   `);
   return pin;
 };
+
+export const readPinsById = async pinId => {
+  return await prismaClient.pins.findUnique({ where: { id: Number(pinId) } });
+};
+
+export const readUnboardPinByPinIdAndUserId = async (pinId, userId) => {
+  return await prismaClient.$queryRaw`
+  SELECT * FROM unboard_pin WHERE user_id=${Number(userId)} AND pin_id=${Number(
+    pinId
+  )}
+  `;
+};
+
+export const createUnboardPin = async (pinId, userId) => {
+  return await prismaClient.unboard_pin.create({
+    data: {
+      user_id: Number(userId),
+      pin_id: Number(pinId),
+    },
+  });
+};
