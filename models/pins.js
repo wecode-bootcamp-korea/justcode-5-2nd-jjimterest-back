@@ -2,13 +2,19 @@ import prismaClient from './prisma-client.js';
 
 export async function pinList(keyword) {
   const pins = await prismaClient.$queryRawUnsafe(`
-  SELECT pins.id AS pin_id, pins.user_id, users.nickname, users.profile_image, pins.image, pins.created_at
+  SELECT pins.id AS pin_id, pins.user_id, users.nickname, users.profile_image, pins.image, pins.created_at, pins.category
   FROM pins
   JOIN users on pins.user_id = users.id
   ${keyword ? `WHERE category LIKE '%${keyword}%'` : ``}
   ORDER BY created_at desc;
 `);
   return pins;
+}
+
+export async function insertKeyword(keyword, userId) {
+  return prismaClient.$queryRaw`
+  Insert Into recent_search(user_id, keyword)
+  VALUES (${userId}, ${keyword})`;
 }
 
 export const readPinById = async (pinId, userId) => {
