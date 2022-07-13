@@ -47,3 +47,30 @@ export const deleteComment = async (userId, commentId) => {
 
   await commentsRepository.deleteComment(commentId);
 };
+
+export const likeComment = async (userId, commentId) => {
+  const comment = await commentsRepository.readCommentsById(commentId);
+  if (!Boolean(comment.length)) {
+    const error = new Error('해당 댓글이 존재하지 않습니다.');
+    error.statusCode = 404;
+    throw error;
+  }
+  const checkLike =
+    await commentsRepository.readCommentsLikeBycommentIdAndUserId(
+      userId,
+      commentId
+    );
+  if (!Boolean(checkLike.length)) {
+    await commentsRepository.createCommentLike(userId, commentId, true);
+  } else {
+    await commentsRepository.updateCommentLike(
+      userId,
+      commentId,
+      !checkLike[0].isLike
+    );
+  }
+  const isLike = await commentsRepository.getIsLike(userId, commentId);
+  const likeCount = await commentsRepository.getCountofCommentLike(commentId);
+
+  return [isLike[0].isLike, likeCount[0].like_count];
+};
