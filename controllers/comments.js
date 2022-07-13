@@ -35,3 +35,23 @@ export const deleteComment = async (req, res) => {
     res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
+
+export const likeComment = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const commentId = req.params.comment_id;
+    const [isLike, likeCount] = await commentsService.likeComment(
+      userId,
+      commentId
+    );
+    const result = JSON.parse(
+      JSON.stringify(
+        likeCount,
+        (_, value) => (typeof value === 'bigint' ? value.toString() : value) // return everything else unchanged
+      )
+    );
+    res.status(201).json({ isLike, like_count: Number(result) });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
