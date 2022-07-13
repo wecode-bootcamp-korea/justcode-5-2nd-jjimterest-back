@@ -1,5 +1,6 @@
 import express from 'express';
 import userRouter from './user.js';
+import pinsRouter from './pins.js';
 import boardRouter from './board.js';
 import recentSearchRouter from './recent-search.js';
 
