@@ -59,12 +59,12 @@ export const kakaoLogin = async code => {
     const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY);
     return token;
   }
-
+  if (!user) {
+    return await kakaoSignUp(email, nickname, profileImage, id);
+  }
   if (socialUser) {
     const token = jwt.sign({ id: socialUser.user_id }, process.env.SECRET_KEY);
     return token;
-  } else {
-    return await kakaoSignUp(email, nickname, profileImage, id);
   }
 };
 
