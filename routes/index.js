@@ -4,8 +4,8 @@ import pinsRouter from './pins.js';
 import boardRouter from './board.js';
 
 const router = express.Router();
-router.use(userRouter);
 router.use(pinsRouter);
+router.use(userRouter);
 router.use(boardRouter);
 
 export default router;
