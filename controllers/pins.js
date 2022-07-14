@@ -2,10 +2,14 @@ import * as pinsService from '../services/pins.js';
 
 export const pinList = async (req, res) => {
   try {
-    const pins = await pinsService.pinList();
+    let keyword = req.query.keyword;
+    const userId = req.userId;
+    console.log('userId :', userId);
+
+    const pins = await pinsService.pinList(keyword, userId);
     res.status(200).json(pins);
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

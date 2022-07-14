@@ -7,9 +7,9 @@ import commentRouter from './comments.js';
 
 const router = express.Router();
 router.use(userRouter);
-router.use(recentSearchRouter);
 router.use(pinsRouter);
 router.use(boardRouter);
+router.use(recentSearchRouter);
 router.use(commentRouter);
 
 export default router;
