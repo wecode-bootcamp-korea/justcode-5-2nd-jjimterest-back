@@ -1,7 +1,11 @@
 import * as pinsModels from '../models/pins.js';
 
-export async function pinList() {
-  const pins = await pinsModels.pinList();
+export async function pinList(keyword, userId) {
+  const pins = await pinsModels.pinList(keyword, userId);
+  if (keyword) {
+    await pinsModels.insertKeyword(keyword, userId);
+  }
+
   return pins;
 }
 
