@@ -10,5 +10,6 @@ router.get('/pins', pinsController.pinList);
 router.get('/pins/:pin_id', pinsController.readPinById);
 router.post('/pins/:pin_id', pinsController.savePin);
 router.get('/pin-make', pinsMakeController.readMakePinPage);
+router.post('/pin-make', pinsMakeController.createPin);
 
 export default router;
