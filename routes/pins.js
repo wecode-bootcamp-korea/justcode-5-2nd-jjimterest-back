@@ -8,20 +8,7 @@ import fs from 'fs';
 
 const router = express.Router();
 
-//const upload = multer({ dest: 'uploads/' });
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    },
-  }),
-});
-
-/*
+//uploads 폴더가 없을시 생성
 try {
   fs.readdirSync('uploads');
 } catch (error) {
@@ -31,30 +18,22 @@ try {
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination(req, file, cb) {
+    destination: function (req, file, cb) {
       cb(null, 'uploads/');
     },
-    filename(req, file, cb) {
+    filename: function (req, file, cb) {
       const ext = path.extname(file.originalname);
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-});*/
+});
 
 router.use(isLogin);
-
-router.post(
-  '/pin-make',
-  upload.single('image'),
-
-  pinsMakeController.createPin
-);
 
 router.get('/pins', pinsController.pinList);
 router.get('/pins/:pin_id', pinsController.readPinById);
 router.post('/pins/:pin_id', pinsController.savePin);
 router.get('/pin-make', pinsMakeController.readMakePinPage);
-//router.post('/pin-make', upload.single('img'), pinsMakeController.createPin);
+router.post('/pin-make', upload.single('image'), pinsMakeController.createPin);
 
 export default router;

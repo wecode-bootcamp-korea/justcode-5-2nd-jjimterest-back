@@ -24,7 +24,6 @@ export async function createPin(
     image
   );
 
-  console.log('service result : ', result);
   let pinId = result.id;
 
   await pinMakeModels.createBoardStore(boardId, pinId);
