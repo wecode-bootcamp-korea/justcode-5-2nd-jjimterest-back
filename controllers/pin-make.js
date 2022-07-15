@@ -18,3 +18,30 @@ export const readMakePinPage = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const createPin = async (req, res) => {
+  console.log('file : ', req.file.path);
+  console.log('body : ', req.body);
+  try {
+    const userId = req.userId;
+    const title = req.body.title;
+    const intro = req.body.intro;
+    const alt = req.body.alt;
+    const category = req.body.category;
+    const image = req.file.path;
+    const boardId = req.body.boardId;
+
+    await pinMakeService.createPin(
+      userId,
+      title,
+      intro,
+      alt,
+      category,
+      image,
+      boardId
+    );
+    res.status(201).json({ message: 'SUCCESS' });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
