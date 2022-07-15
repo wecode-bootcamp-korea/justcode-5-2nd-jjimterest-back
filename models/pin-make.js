@@ -12,15 +12,7 @@ export async function readMakePinPage(userId) {
   return makePinPage;
 }
 
-export async function createPin(
-  userId,
-  title,
-  intro,
-  alt,
-  category,
-  image,
-  board_id
-) {
+export async function createPin(userId, title, intro, alt, category, image) {
   return await prismaClient.pins.create({
     data: {
       user_id: userId,
@@ -36,7 +28,7 @@ export async function createPin(
 export async function createBoardStore(board_id, pinId) {
   let createdPin = await prismaClient.board_store.create({
     data: {
-      board_id: board_id,
+      board_id: Number(board_id),
       pin_id: pinId,
     },
   });
