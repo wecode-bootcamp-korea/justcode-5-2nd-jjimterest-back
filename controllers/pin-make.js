@@ -29,7 +29,6 @@ export const createPin = async (req, res) => {
     const alt = req.body.alt;
     const category = req.body.category;
     const image = req.file.path;
-    //const image = req.body.image;
     const boardId = req.body.boardId;
 
     await pinMakeService.createPin(
