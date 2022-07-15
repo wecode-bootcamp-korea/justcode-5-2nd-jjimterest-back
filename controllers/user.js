@@ -43,3 +43,20 @@ export const kakaoLogin = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const getUserInfoByUserId = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const name = req.params.name;
+    const result = await userService.getUserInfoByUserId(userId, name);
+    const info = JSON.parse(
+      JSON.stringify(
+        result,
+        (key, value) => (typeof value === 'bigint' ? value.toString() : value) // return everything else unchanged
+      )
+    );
+    res.status(200).json(info);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};

@@ -2,6 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 import * as userController from '../controllers/user.js';
 import { validate } from '../middleware/validator.js';
+import { isLogin } from '../middleware/auth.js';
 const router = express.Router();
 
 const validateCredential = [
@@ -25,4 +26,5 @@ router.post('/users/login', validateCredential, userController.login);
 
 router.get('/kakao', userController.kakao);
 router.get('/auth/kakao/callback', userController.kakaoLogin);
+router.get('/profile/:name', isLogin, userController.getUserInfoByUserId);
 export default router;
