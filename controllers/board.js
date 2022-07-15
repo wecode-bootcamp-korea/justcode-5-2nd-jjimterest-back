@@ -11,14 +11,13 @@ export const createBoard = async (req, res) => {
   }
 };
 
-
 export const deleteBoard = async (req, res) => {
   try {
     const userId = req.userId;
     const boardId = req.params.board_id;
     await boardService.deleteBoard(userId, boardId);
     return res.sendStatus(204);
-    } catch (error) {
+  } catch (error) {
     return res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
