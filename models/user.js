@@ -51,7 +51,7 @@ export const getUserInfoByUserId = async (userId, otherUserId) => {
   users.profile_image,
   followee.following,
   follower.follower,
-  (SELECT JSON_ARRAYAGG(JSON_OBJECT('id',pin_board.id,'title',pin_board.title,'pins',pin_board.pins)) boards_array FROM (SELECT boards.id, boards.title,JSON_ARRAYAGG(CASE WHEN pins.id IS NOT NULL THEN JSON_OBJECT('pin_id',pins.id,'image',pins.image) END) pins FROM boards LEFT JOIN board_store ON boards.id = board_store.board_id LEFT JOIN pins ON board_store.pin_id = pins.id WHERE boards.user_id=${userId} GROUP BY boards.id) pin_board) boards,
+  (SELECT JSON_ARRAYAGG(JSON_OBJECT('id',pin_board.id,'title',pin_board.title,'cover_image',pin_board.cover_image_url,'pins',pin_board.pins)) boards_array FROM (SELECT boards.id, boards.title,boards.cover_image_url,JSON_ARRAYAGG(CASE WHEN pins.id IS NOT NULL THEN JSON_OBJECT('pin_id',pins.id,'image',pins.image) END) pins FROM boards LEFT JOIN board_store ON boards.id = board_store.board_id LEFT JOIN pins ON board_store.pin_id = pins.id WHERE boards.user_id=${userId} GROUP BY boards.id) pin_board) boards,
   (SELECT JSON_ARRAYAGG(JSON_OBJECT('id',p.pin_id,'image',p.image)) no_idea_pin FROM (SELECT pin_id, pins.image FROM unboard_pin JOIN pins ON unboard_pin.pin_id = pins.id WHERE unboard_pin.user_id=${userId}) p) no_idea_pins,
   (SELECT JSON_MERGE(JSON_ARRAYAGG(JSON_OBJECT('id',p.pin_id,'image',image)), IFNULL((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',pins.id,'image',image))
 FROM boards
