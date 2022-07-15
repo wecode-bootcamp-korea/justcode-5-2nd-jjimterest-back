@@ -11,7 +11,6 @@ export async function pinList(keyword) {
   return pins;
 }
 
-<<<<<<< Updated upstream
 export async function insertKeyword(keyword, userId) {
   return prismaClient.$queryRaw`
   Insert Into recent_search(user_id, keyword)
@@ -56,21 +55,3 @@ export const createUnboardPin = async (pinId, userId) => {
     },
   });
 };
-=======
-/*
-export async function pinList(keyword) {
-  const pins = await prisma.$transaction([
-    prisma.$queryRawUnsafe`
-    SELECT pins.id AS pin_id, pins.user_id, users.nickname, users.profile_image, pins.image, pins.created_at
-    FROM pins
-    JOIN users on pins.user_id = users.id
-    ${keyword ? `WHERE category LIKE '%${keyword}%'` : ``}
-    ORDER BY created_at desc;
-`,
-    prisma.$queryRaw`
-    `,
-  ]);
-  return pins;
-}
-*/
->>>>>>> Stashed changes
