@@ -47,3 +47,15 @@ export const updateBoard = async (userId, info) => {
     );
   }
 };
+
+export const readBoardDetailById = async boardId => {
+  const check = await boardRepository.readBoardById(boardId);
+  if (!Boolean(check)) {
+    const error = new Error('해당 보드가 존재하지 않습니다.');
+    error.statusCode = 404;
+    throw error;
+  }
+  const [result] = await boardRepository.readBoardDetailById(boardId);
+  const info = { ...result, pins: result.pins ? result.pins : [] };
+  return info;
+};
