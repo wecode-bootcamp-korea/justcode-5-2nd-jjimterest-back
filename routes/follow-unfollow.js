@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.use(isLogin);
 
-router.post('/follow', followController.clickFollow);
+router.post('/follow', followController.clickFollowBtn);
 
 export default router;

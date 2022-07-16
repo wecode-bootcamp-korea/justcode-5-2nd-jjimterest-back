@@ -1,13 +1,13 @@
 import * as followService from '../services/follow-unfollow.js';
 
-export const clickFollow = async (req, res) => {
+export const clickFollowBtn = async (req, res) => {
   try {
     const userId = req.userId;
     const followeeId = req.query.followee_id;
     console.log('userId : ', userId);
     console.log('followeeId : ', followeeId);
 
-    await followService.clickFollow(userId, followeeId);
+    await followService.clickFollowBtn(userId, followeeId);
 
     res.status(201).json({ message: 'CLICK_SUCCESS' });
   } catch (error) {
