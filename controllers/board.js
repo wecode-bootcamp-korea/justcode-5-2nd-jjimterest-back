@@ -48,3 +48,15 @@ export const readBoardDetailById = async (req, res) => {
     return res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
+
+export const mergeBoard = async (req, res) => {
+  try {
+    const oldBoardId = req.params.board_id;
+    const newBoardId = req.body.new_board_id;
+    const userId = req.userId;
+    await boardService.mergeBoard(oldBoardId, newBoardId, userId);
+    res.status(200).json({ message: 'SUCCESS' });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
