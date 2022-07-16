@@ -6,6 +6,7 @@ router.use(isLogin);
 
 router.post('/board', boardController.createBoard);
 router.put('/board', boardController.updateBoard);
+router.put('/board/:board_id', boardController.mergeBoard);
 router.get('/board/:board_id', boardController.readBoardDetailById);
 router.delete('/board/:board_id', boardController.deleteBoard);
 
