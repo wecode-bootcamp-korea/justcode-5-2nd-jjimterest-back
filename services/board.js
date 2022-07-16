@@ -48,7 +48,7 @@ export const updateBoard = async (userId, info) => {
   }
 };
 
-export const readBoardDetailById = async boardId => {
+export const readBoardDetailById = async (boardId, userId) => {
   const check = await boardRepository.readBoardById(boardId);
   if (!Boolean(check)) {
     const error = new Error('해당 보드가 존재하지 않습니다.');
@@ -56,6 +56,10 @@ export const readBoardDetailById = async boardId => {
     throw error;
   }
   const [result] = await boardRepository.readBoardDetailById(boardId);
-  const info = { ...result, pins: result.pins ? result.pins : [] };
+  const info = {
+    ...result,
+    pins: result.pins ? result.pins : [],
+    isMine: check.user_id === userId ? true : false,
+  };
   return info;
 };
