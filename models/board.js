@@ -40,3 +40,17 @@ export const readBoardDetailById = async boardId => {
   WHERE boards.id=${boardId};
   `;
 };
+
+export const updateBoardStoreById = async (oldBoardId, newBoardId) => {
+  return prismaClient.$transaction([
+    prismaClient.board_store.updateMany({
+      where: { board_id: Number(oldBoardId) },
+      data: { board_id: Number(newBoardId) },
+    }),
+    prismaClient.boards.delete({
+      where: {
+        id: Number(oldBoardId),
+      },
+    }),
+  ]);
+};
