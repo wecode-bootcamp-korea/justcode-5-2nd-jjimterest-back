@@ -41,7 +41,8 @@ export const updateBoard = async (req, res) => {
 export const readBoardDetailById = async (req, res) => {
   try {
     const boardId = Number(req.params.board_id);
-    const data = await boardService.readBoardDetailById(boardId);
+    const userId = req.userId;
+    const data = await boardService.readBoardDetailById(boardId, userId);
     res.status(200).json(data);
   } catch (error) {
     return res.status(error.statusCode || 500).json({ message: error.message });
