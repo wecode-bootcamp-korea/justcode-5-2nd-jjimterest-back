@@ -17,7 +17,7 @@ export const login = async (req, res) => {
     res.status(errors.statusCode || 500).json({ message: errors.message });
   }
 };
-export const kakao = async (req, res) => {
+export const kakao = async (_, res) => {
   try {
     const baseUrl = 'https://kauth.kakao.com/oauth/authorize';
     const config = {
@@ -52,7 +52,7 @@ export const getUserInfoByUserId = async (req, res) => {
     const info = JSON.parse(
       JSON.stringify(
         result,
-        (key, value) => (typeof value === 'bigint' ? value.toString() : value) // return everything else unchanged
+        (_, value) => (typeof value === 'bigint' ? value.toString() : value) // return everything else unchanged
       )
     );
     res.status(200).json(info);
