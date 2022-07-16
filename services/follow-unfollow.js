@@ -5,11 +5,9 @@ export const clickFollowBtn = async (userId, followeeId) => {
   const isFollow = await followModels.isFollow(userId, followeeId);
 
   if (isFollow) {
-    console.log('팔로우중');
     // 팔로우중이라면 언팔로우
     return await followModels.deleteFollow(userId, followeeId);
   } else {
-    console.log('팔로우중이 아닙니다');
     // 팔로우중이 아니라면 팔로우
     return await followModels.createFollow(userId, followeeId);
   }

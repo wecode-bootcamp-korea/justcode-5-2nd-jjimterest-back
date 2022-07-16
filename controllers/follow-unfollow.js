@@ -4,8 +4,6 @@ export const clickFollowBtn = async (req, res) => {
   try {
     const userId = req.userId;
     const followeeId = req.query.followee_id;
-    console.log('userId : ', userId);
-    console.log('followeeId : ', followeeId);
 
     await followService.clickFollowBtn(userId, followeeId);
 
