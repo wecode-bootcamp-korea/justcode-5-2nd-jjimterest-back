@@ -20,8 +20,6 @@ export const readMakePinPage = async (req, res) => {
 };
 
 export const createPin = async (req, res) => {
-  console.log('file : ', req.file.path);
-  console.log('body : ', req.body);
   try {
     const userId = req.userId;
     const title = req.body.title;
