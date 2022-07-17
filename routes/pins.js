@@ -3,8 +3,17 @@ import * as pinsController from '../controllers/pins.js';
 import * as pinsMakeController from '../controllers/pin-make.js';
 import { isLogin } from '../middleware/auth.js';
 import { upload } from '../middleware/multer.js';
+import fs from 'fs';
 
 const router = express.Router();
+
+//uploads 폴더가 없을시 생성
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
 
 router.use(isLogin);
 
