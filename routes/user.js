@@ -16,8 +16,10 @@ const validateCredential = [
     .notEmpty()
     .withMessage('비밀번호를 입력해주세요.')
     .trim()
-    .isLength({ min: 8, max: 20 })
-    .withMessage('8~16자리 비밀번호를 입력해주세요.'),
+    .matches(
+      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/
+    )
+    .withMessage('비밀번호를 올바른 형식으로 입력해주세요.'),
   validate,
 ];
 
