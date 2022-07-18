@@ -3,6 +3,6 @@ import * as myPageController from '../controllers/mypage.js';
 import { isLogin } from '../middleware/auth.js';
 
 router.use(isLogin);
-router.get('/pins', myPageController.readMyPage);
+router.get('/mypage', myPageController.readMyPage);
 
 const router = express.Router();
