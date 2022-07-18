@@ -1,12 +1,14 @@
 import prismaClient from './prisma-client.js';
 
-export async function pinList(keyword) {
+// pin list (20개씩)
+export async function pinList(keyword, pageNumber) {
   const pins = await prismaClient.$queryRawUnsafe(`
   SELECT pins.id AS pin_id, pins.user_id, users.nickname, users.profile_image, pins.image, pins.created_at, pins.category
   FROM pins
   JOIN users on pins.user_id = users.id
   ${keyword ? `WHERE category LIKE '%${keyword}%'` : ``}
-  ORDER BY created_at desc;
+  ORDER BY created_at desc
+  LIMIT 20 OFFSET ${(Number(pageNumber) - 1) * 10};
 `);
   return pins;
 }

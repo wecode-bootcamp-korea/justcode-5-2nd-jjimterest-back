@@ -4,8 +4,9 @@ export const pinList = async (req, res) => {
   try {
     let keyword = req.query.keyword;
     const userId = req.userId;
+    let pageNumber = req.query.pagenumber;
 
-    const pins = await pinsService.pinList(keyword, userId);
+    const pins = await pinsService.pinList(keyword, userId, pageNumber);
     res.status(200).json(pins);
   } catch (error) {
     res.status(500).json({ message: error.message });
