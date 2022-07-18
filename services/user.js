@@ -124,6 +124,22 @@ export const getUserInfoByUserId = async (userId, name) => {
     error.statusCode = 404;
     throw error;
   }
+
+  if (profileUserId.id === userId) {
+    const [info] = await userRepository.getUserInfoByUserId(userId);
+
+    info.boards = info.boards
+      ? info.boards.map(board => {
+          return { ...board, pins: board.pins.filter(Boolean) };
+        })
+      : [];
+    info.no_idea_pins = info.no_idea_pins ? info.no_idea_pins : [];
+    info.all_pins = info.all_pins ? info.all_pins : [];
+    info.following = info.following ? info.following : [];
+    info.follower = info.follower ? info.follower : [];
+    const result = { ...info, isMine: true };
+    return result;
+  }
   const [info] = await userRepository.getUserInfoByUserId(
     userId,
     profileUserId.id
@@ -138,11 +154,6 @@ export const getUserInfoByUserId = async (userId, name) => {
   info.all_pins = info.all_pins ? info.all_pins : [];
   info.following = info.following ? info.following : [];
   info.follower = info.follower ? info.follower : [];
-
-  if (profileUserId.id === userId) {
-    const result = { ...info, isMine: true };
-    return result;
-  }
   const result = {
     ...info,
     isMine: false,
