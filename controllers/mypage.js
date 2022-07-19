@@ -17,11 +17,14 @@ export async function updateProfile(req, res) {
   try {
     const { name, intro, nickname } = req.body;
     const userId = req.userId;
+    const image = req.file.path;
+    console.log(image);
     await myPageService.updateProfile({
       userId,
       name,
       intro,
       nickname,
+      image,
     });
     res.status(200).json({ message: '프로필 수정 성공' });
   } catch (error) {
