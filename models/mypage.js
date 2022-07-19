@@ -19,3 +19,14 @@ export async function readAccountSettings(userId) {
 
   return accountSettings;
 }
+
+export const getUserPasswordbyId = async user_id => {
+  return await prismaClient.$queryRaw`
+        SELECT password FROM users WHERE id=${user_id}`;
+};
+
+export const updatePassword = async (user_id, password) => {
+  return await prismaClient.$queryRaw`
+    UPDATE users set password=${password} WHERE id=${user_id}
+  `;
+};
