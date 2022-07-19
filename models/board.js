@@ -54,3 +54,13 @@ export const updateBoardStoreById = async (oldBoardId, newBoardId) => {
     }),
   ]);
 };
+
+// 유저 프로필 - 보드 정렬 (알파벳순)
+export const readBoardListBySorting = async (userId, sort) => {
+  return await prismaClient.$queryRawUnsafe(`
+  SELECT JSON_ARRAYAGG(JSON_OBJECT('id', pin_board.id,'title',pin_board.title,'pins',pin_board.pins)) boards
+  FROM (SELECT boards.id, boards.title,JSON_ARRAYAGG(CASE WHEN pins.id IS NOT NULL THEN JSON_OBJECT('pin_id',pins.id,'image',pins.image) END) pins 
+  FROM boards LEFT JOIN board_store ON boards.id = board_store.board_id LEFT JOIN pins ON board_store.pin_id = pins.id 
+  WHERE boards.user_id=${userId} GROUP BY boards.id order by title) pin_board;
+  `);
+};

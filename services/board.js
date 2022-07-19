@@ -79,3 +79,12 @@ export const mergeBoard = async (oldBoardId, newBoardId, userId) => {
   }
   return await boardRepository.updateBoardStoreById(oldBoardId, newBoardId);
 };
+
+// 유저 프로필 - 보드 정렬
+export const readBoardListBySorting = async (userId, sort) => {
+  console.log('서비스 userId : ', userId, 'sort : ', sort);
+
+  const boards = await boardRepository.readBoardListBySorting(userId, sort);
+
+  return boards;
+};

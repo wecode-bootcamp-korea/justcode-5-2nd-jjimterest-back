@@ -60,3 +60,17 @@ export const mergeBoard = async (req, res) => {
     return res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
+
+// 유저 프로필 - 보드 정렬
+export const readBoardListBySorting = async (req, res) => {
+  try {
+    const userId = req.userId;
+    let sort = req.query.sort;
+    console.log('컨트롤러 userId : ', userId, 'sort : ', sort);
+
+    const boards = await boardService.readBoardListBySorting(userId, sort);
+    res.status(200).json(boards);
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
