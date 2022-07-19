@@ -21,7 +21,7 @@ export async function readMakePinPage(userId) {
   JOIN users on boards.user_id = users.id
   JOIN followings on users.id = followee_id
   WHERE boards.user_id = ${userId}
-  GROUP BY user_id`;
+  GROUP BY users.id, boards.id`;
   return makePinPage;
 }
 
