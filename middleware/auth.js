@@ -3,7 +3,6 @@ import * as userRepository from '../models/user.js';
 const AUTH_ERROR = { message: 'Authentication Error' };
 export const isLogin = (req, res, next) => {
   const authHeader = req.get('Authorization');
-  console.log(authHeader);
   if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json(AUTH_ERROR);
   }
