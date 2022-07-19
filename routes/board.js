@@ -10,4 +10,6 @@ router.put('/board/:board_id', boardController.mergeBoard);
 router.get('/board/:board_id', boardController.readBoardDetailById);
 router.delete('/board/:board_id', boardController.deleteBoard);
 
+router.get('/board/last-saved', boardController.readBoardDetailById);
+
 export default router;
