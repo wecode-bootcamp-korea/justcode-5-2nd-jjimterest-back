@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import express from 'express';
 import routes from './routes/index.js';
+import { isLogin } from './middleware/auth.js';
 
 dotenv.config();
 const corsOption = {
@@ -12,8 +13,9 @@ const app = express();
 app.use(cors(corsOption));
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(isLogin, express.static('uploads'));
+//app.use('/uploads', express.static('uploads'));
 app.use(routes);
-app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 10010;
 
