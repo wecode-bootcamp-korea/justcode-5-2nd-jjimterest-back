@@ -7,7 +7,6 @@ import path from 'path';
 import fs from 'fs';
 
 const router = express.Router();
-
 //uploads 폴더가 없을시 생성
 try {
   fs.readdirSync('uploads');
