@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import express from 'express';
 import routes from './routes/index.js';
-import { isLogin } from './middleware/auth.js';
 
 dotenv.config();
 const corsOption = {
