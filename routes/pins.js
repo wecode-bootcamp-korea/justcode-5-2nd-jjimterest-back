@@ -7,7 +7,6 @@ import path from 'path';
 import fs from 'fs';
 
 const router = express.Router();
-
 //uploads 폴더가 없을시 생성
 try {
   fs.readdirSync('uploads');
@@ -23,7 +22,8 @@ const upload = multer({
     },
     filename: function (req, file, cb) {
       const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      console.log(file.originalname + Date.now() + ext);
+      cb(null, file.originalname + Date.now() + ext);
     },
   }),
 });
