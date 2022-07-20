@@ -22,7 +22,6 @@ const upload = multer({
     },
     filename: function (req, file, cb) {
       const ext = path.extname(file.originalname);
-      console.log(file.originalname + Date.now() + ext);
       cb(null, file.originalname + Date.now() + ext);
     },
   }),
