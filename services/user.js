@@ -56,6 +56,9 @@ export const kakaoLogin = async code => {
 
   if (user && !socialUser) {
     await userRepository.createSocialUser(id, user.id);
+    if (!user.profile_image) {
+      await userRepository.updateUserProfileImageById(user.id, profileImage);
+    }
     const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY);
     return token;
   }
