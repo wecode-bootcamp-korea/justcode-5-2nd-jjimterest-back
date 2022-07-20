@@ -93,3 +93,7 @@ export const getUserId = async name => {
     where: { name },
   });
 };
+
+export const updateUserProfileImageById = async (userId, profileImage) => {
+  return await prismaClient.$queryRaw`UPDATE users SET profile_image=${profileImage} WHERE id=${userId}`;
+};
