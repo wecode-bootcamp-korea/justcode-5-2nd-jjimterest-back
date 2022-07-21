@@ -33,7 +33,7 @@ router.use(isLogin);
 router.get('/edit-profile', myPageController.readEditProfile);
 router.put(
   '/edit-profile',
-  upload.single('profile_image'),
+  upload.single('image'),
   myPageController.updateProfile
 );
 

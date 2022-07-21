@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import * as userRepositroy from '../models/user.js';
 import * as myPageModels from '../models/mypage.js';
 
 // 공개 프로필 수정 페이지 불러오기
@@ -10,7 +11,16 @@ export async function readEditProfile(userId) {
 
 // 프로필 사진, 이름, 소개, 닉네임 변경
 export async function updateProfile(userInfo) {
-  return await myPageModels.updateProfile(userInfo);
+  const { userId, name, intro, nickname, image } = userInfo;
+  const user = await userRepositroy.readUserById(userId);
+  const profile_image = image ? image : user.profile_image;
+  return await myPageModels.updateProfile(
+    userId,
+    name,
+    intro,
+    nickname,
+    profile_image
+  );
 }
 
 // 비밀번호 변경 페이지 불러오기

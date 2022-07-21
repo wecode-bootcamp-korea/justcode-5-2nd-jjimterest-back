@@ -17,8 +17,7 @@ export async function updateProfile(req, res) {
   try {
     const { name, intro, nickname } = req.body;
     const userId = req.userId;
-    const image = req.file.path;
-    console.log(image);
+    const image = req.file ? req.file.filename : null;
     await myPageService.updateProfile({
       userId,
       name,
