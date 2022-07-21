@@ -20,6 +20,7 @@ export async function insertKeyword(keyword, userId) {
 }
 
 export const readPinById = async (pinId, userId) => {
+  console.log(pinId, userId);
   const pin = await prismaClient.$queryRawUnsafe(`
   SELECT pins.id, user.nickname,user.count,pins.title, user.profile_image,pins.intro, pins.image, comments.comments
 from pins LEFT JOIN (SELECT
