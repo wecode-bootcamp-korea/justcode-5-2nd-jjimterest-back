@@ -6,9 +6,6 @@ const router = express.Router();
 router.use(isLogin);
 
 router.get('/recent-search', recentSearchController.serchList);
-<<<<<<< HEAD
-=======
 router.delete('/recent-search', recentSearchController.deleteAllSerchList);
->>>>>>> develop
 
 export default router;
