@@ -39,7 +39,6 @@ export const updateBoard = async (userId, info) => {
     throw error;
   } else {
     return await boardRepository.updateBoard(
-      userId,
       title,
       cover_image,
       intro,
