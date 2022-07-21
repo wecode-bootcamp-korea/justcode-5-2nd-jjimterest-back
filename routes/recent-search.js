@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.use(isLogin);
 
-router.get('/recent-search/:id', recentSearchController.serchList);
+router.get('/recent-search', recentSearchController.serchList);
 
 export default router;
