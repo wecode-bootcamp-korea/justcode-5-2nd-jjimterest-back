@@ -8,6 +8,7 @@ export async function serchList(userId) {
   ORDER BY created_at desc
   Limit 5;
 `;
+
   return keywords;
 }
 
