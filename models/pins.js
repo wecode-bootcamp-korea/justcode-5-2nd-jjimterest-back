@@ -8,7 +8,7 @@ export async function pinList(keyword, pageNumber) {
   JOIN users on pins.user_id = users.id
   ${keyword ? `WHERE category LIKE '%${keyword}%'` : ``}
   ORDER BY created_at desc
-  LIMIT 20 OFFSET ${(Number(pageNumber) - 1) * 10};
+  LIMIT 20 OFFSET ${(Number(pageNumber) - 1) * 20};
 `);
   return pins;
 }
