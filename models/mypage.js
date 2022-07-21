@@ -12,10 +12,16 @@ export async function readEditProfile(userId) {
 }
 
 // 프로필 사진, 이름, 소개, 닉네임 변경
-export async function updateProfile(userInfo) {
+export async function updateProfile(
+  userId,
+  name,
+  intro,
+  nickname,
+  profile_image
+) {
   const result = await prismaClient.$queryRaw`
-  UPDATE users SET name=${userInfo.name},intro=${userInfo.intro},nickname=${userInfo.nickname},profile_image=${userInfo.image}
-  WHERE id=${userInfo.userId}
+  UPDATE users SET name=${name},intro=${intro},nickname=${nickname},profile_image=${profile_image}
+  WHERE id=${userId}
   `;
 
   return result;
