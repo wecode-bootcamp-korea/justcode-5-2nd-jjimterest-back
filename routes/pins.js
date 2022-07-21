@@ -1,6 +1,7 @@
 import express from 'express';
 import * as pinsController from '../controllers/pins.js';
 import * as pinsMakeController from '../controllers/pin-make.js';
+import * as pinsOrganizeController from '../controllers/pin-organize.js';
 import { isLogin } from '../middleware/auth.js';
 import multer from 'multer';
 import path from 'path';
@@ -34,5 +35,6 @@ router.get('/pins/:pin_id', pinsController.readPinById);
 router.post('/pins/:pin_id', pinsController.savePin);
 router.get('/pin-make', pinsMakeController.readMakePinPage);
 router.post('/pin-make', upload.single('image'), pinsMakeController.createPin);
+router.post('/pin-organize', pinsOrganizeController.organizePins);
 
 export default router;

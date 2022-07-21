@@ -15,6 +15,12 @@ export async function createPin(
   image,
   boardId
 ) {
+  if (!category) {
+    const error = new Error('카테고리를 입력해주세요');
+    error.statusCode = 400;
+    throw error;
+  }
+
   const result = await pinMakeModels.createPin(
     userId,
     title,
