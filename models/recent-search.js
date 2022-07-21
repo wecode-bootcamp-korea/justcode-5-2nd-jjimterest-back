@@ -11,3 +11,8 @@ export async function serchList(userId) {
 
   return keywords;
 }
+
+export async function deleteAllSerchList(userId) {
+  await prismaClient.$queryRaw`
+  DELETE FROM recent_search WHERE user_id=${userId}`;
+}

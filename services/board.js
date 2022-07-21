@@ -47,3 +47,35 @@ export const updateBoard = async (userId, info) => {
     );
   }
 };
+
+export const readBoardDetailById = async (boardId, userId) => {
+  const check = await boardRepository.readBoardById(boardId);
+  if (!Boolean(check)) {
+    const error = new Error('해당 보드가 존재하지 않습니다.');
+    error.statusCode = 404;
+    throw error;
+  }
+  const [result] = await boardRepository.readBoardDetailById(boardId);
+  const info = {
+    ...result,
+    pins: result.pins ? result.pins : [],
+    isMine: check.user_id === userId ? true : false,
+  };
+  return info;
+};
+
+export const mergeBoard = async (oldBoardId, newBoardId, userId) => {
+  const newBoardCheck = await boardRepository.readBoardById(newBoardId);
+  const oldBoardCheck = await boardRepository.readBoardById(oldBoardId);
+  if (!Boolean(newBoardCheck) || !Boolean(oldBoardCheck)) {
+    const error = new Error('해당 보드가 존재하지 않습니다.');
+    error.statusCode = 404;
+    throw error;
+  }
+  if (check.user_id !== userId) {
+    const error = new Error('해당 보드에 병합 할 권한이 없습니다.');
+    error.statusCode = 400;
+    throw error;
+  }
+  return await boardRepository.updateBoardStoreById(oldBoardId, newBoardId);
+};
