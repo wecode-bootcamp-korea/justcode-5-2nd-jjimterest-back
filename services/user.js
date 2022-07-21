@@ -56,15 +56,18 @@ export const kakaoLogin = async code => {
 
   if (user && !socialUser) {
     await userRepository.createSocialUser(id, user.id);
+    if (!user.profile_image) {
+      await userRepository.updateUserProfileImageById(user.id, profileImage);
+    }
     const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY);
     return token;
   }
-
+  if (!user) {
+    return await kakaoSignUp(email, nickname, profileImage, id);
+  }
   if (socialUser) {
     const token = jwt.sign({ id: socialUser.user_id }, process.env.SECRET_KEY);
     return token;
-  } else {
-    return await kakaoSignUp(email, nickname, profileImage, id);
   }
 };
 
@@ -115,4 +118,49 @@ const getUserInfoByToken = async accessToken => {
     },
   });
   return userInfo;
+};
+
+export const getUserInfoByUserId = async (userId, name) => {
+  const profileUserId = await userRepository.getUserId(name);
+  if (!Boolean(profileUserId)) {
+    const error = new Error('해당 유저가 존재하지 않습니다.');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  if (profileUserId.id === userId) {
+    const [info] = await userRepository.getUserInfoByUserId(userId);
+
+    info.boards = info.boards
+      ? info.boards.map(board => {
+          return { ...board, pins: board.pins.filter(Boolean) };
+        })
+      : [];
+    info.no_idea_pins = info.no_idea_pins ? info.no_idea_pins : [];
+    info.all_pins = info.all_pins ? info.all_pins : [];
+    info.following = info.following ? info.following : [];
+    info.follower = info.follower ? info.follower : [];
+    const result = { ...info, isMine: true };
+    return result;
+  }
+  const [info] = await userRepository.getUserInfoByUserId(
+    userId,
+    profileUserId.id
+  );
+
+  info.boards = info.boards
+    ? info.boards.map(board => {
+        return { ...board, pins: board.pins.filter(Boolean) };
+      })
+    : [];
+  info.no_idea_pins = info.no_idea_pins ? info.no_idea_pins : [];
+  info.all_pins = info.all_pins ? info.all_pins : [];
+  info.following = info.following ? info.following : [];
+  info.follower = info.follower ? info.follower : [];
+  const result = {
+    ...info,
+    isMine: false,
+    isFollowing: Boolean(info.isFollowing),
+  };
+  return result;
 };
