@@ -21,7 +21,7 @@ export async function insertKeyword(keyword, userId) {
 
 export const readPinById = async (pinId, userId) => {
   const pin = await prismaClient.$queryRawUnsafe(`
-  SELECT pins.id, user.nickname,user.count,pins.title, user.profile_image,pins.intro, pins.image, comments.comments
+  SELECT pins.id, user.id user_id,user.nickname,user.count,pins.title, user.profile_image,pins.intro, pins.image, comments.comments
   from pins LEFT JOIN (SELECT
                       pin_id,
                       JSON_ARRAYAGG(CASE WHEN comments.id IS NOT NULL THEN JSON_OBJECT('id',comments.id,'nickname',comment_user.nickname,'content',comments.content,'parent_id',comments.parent_id,'profile_image',comment_user.profile_image,'user_id',comment_user.id,'created_at',comments.created_at,'like_count',cl.like_count ,'isLike',IFNULL(
