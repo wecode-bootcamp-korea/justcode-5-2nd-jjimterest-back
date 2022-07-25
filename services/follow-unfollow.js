@@ -12,3 +12,9 @@ export const clickFollowBtn = async (userId, followeeId) => {
     return await followModels.createFollow(userId, followeeId);
   }
 };
+
+export const selectFollow = async (userId, followeeId) => {
+  const isFollow = await followModels.isFollow(userId, followeeId);
+
+  return isFollow;
+};
