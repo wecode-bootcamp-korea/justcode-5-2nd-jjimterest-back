@@ -42,3 +42,38 @@ export const savePin = async (pinId, userId) => {
 export async function organizePins(userId, pinId, boardId) {
   await pinsModels.organizePins(userId, pinId, boardId);
 }
+
+export async function readMakePinPage(userId) {
+  const makePinPage = await pinsModels.readMakePinPage(userId);
+
+  return makePinPage;
+}
+
+export async function createPin(
+  userId,
+  title,
+  intro,
+  alt,
+  category,
+  image,
+  boardId
+) {
+  if (!category) {
+    const error = new Error('카테고리를 입력해주세요');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const result = await pinsModels.createPin(
+    userId,
+    title,
+    intro,
+    alt,
+    category,
+    image
+  );
+
+  let pinId = result.id;
+
+  await pinsModels.createBoardStore(boardId, pinId);
+}
