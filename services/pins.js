@@ -38,3 +38,7 @@ export const savePin = async (pinId, userId) => {
   }
   return await pinsModels.createUnboardPin(pinId, userId);
 };
+
+export async function organizePins(userId, pinId, boardId) {
+  await pinsModels.organizePins(userId, pinId, boardId);
+}
