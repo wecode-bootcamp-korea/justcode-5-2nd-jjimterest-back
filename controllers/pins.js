@@ -5,8 +5,14 @@ export const pinList = async (req, res) => {
     let keyword = req.query.keyword;
     const userId = req.userId;
     let pageNumber = req.query.pagenumber;
+    let isSearch = req.query.isSearch;
 
-    const pins = await pinsService.pinList(keyword, userId, pageNumber);
+    const pins = await pinsService.pinList(
+      keyword,
+      userId,
+      pageNumber,
+      isSearch
+    );
     res.status(200).json(pins);
   } catch (error) {
     res.status(500).json({ message: error.message });
