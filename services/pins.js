@@ -1,9 +1,9 @@
 import * as pinsModels from '../models/pins.js';
 
-export async function pinList(keyword, userId, pageNumber) {
+export async function pinList(keyword, userId, pageNumber, isSearch) {
   const pins = await pinsModels.pinList(keyword, pageNumber);
 
-  if (keyword) {
+  if (isSearch && keyword) {
     await pinsModels.insertKeyword(keyword, userId);
   }
 
