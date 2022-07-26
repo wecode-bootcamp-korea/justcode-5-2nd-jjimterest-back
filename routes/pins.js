@@ -35,6 +35,6 @@ router.get('/pins/:pin_id', pinsController.readPinById);
 router.post('/pins/:pin_id', pinsController.savePin);
 router.get('/pin-make', pinsMakeController.readMakePinPage);
 router.post('/pin-make', upload.single('image'), pinsMakeController.createPin);
-router.post('/pin-organize', pinsOrganizeController.organizePins);
+router.post('/pin-organize', pinsController.organizePins);
 
 export default router;
