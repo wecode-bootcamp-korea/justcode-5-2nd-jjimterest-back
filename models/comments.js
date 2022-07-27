@@ -7,7 +7,7 @@ export const createComment = async (userId, parentId, pinId, content) => {
   )},${content})`;
 };
 
-export const readCommentsById = async commentId => {
+export const readCommentById = async commentId => {
   return await prismaClient.$queryRaw`
   SELECT * FROM comments WHERE id=${commentId};
   `;

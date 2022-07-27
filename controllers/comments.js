@@ -12,7 +12,6 @@ export const createComment = async (req, res) => {
     res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
-
 export const updateComment = async (req, res) => {
   try {
     const userId = req.userId;
