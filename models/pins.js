@@ -68,8 +68,8 @@ export async function organizePins(userId, pinId, boardId) {
   ]);
 }
 
-export async function readMakePinPage(userId) {
-  const makePinPage = await prismaClient.$queryRaw`
+export async function readBoardWithUser(userId) {
+  return await prismaClient.$queryRaw`
   select users.name, boards.follower_count,JSON_ARRAYAGG(JSON_OBJECT('board_id',boards.id,"title", boards.title,'cover_image_url',boards.cover_image_url)) boards
   from users
   LEFT JOIN (SELECT boards.id, boards.user_id, boards.title, boards.cover_image_url, boards.count follower_count
@@ -79,7 +79,6 @@ export async function readMakePinPage(userId) {
   where users.id = ${userId}
   GROUP BY users.name
   `;
-  return makePinPage;
 }
 
 export async function createPin(userId, title, intro, alt, category, image) {

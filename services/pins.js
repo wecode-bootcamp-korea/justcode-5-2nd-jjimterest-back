@@ -44,7 +44,7 @@ export async function organizePins(userId, pinId, boardId) {
 }
 
 export async function readMakePinPage(userId) {
-  const makePinPage = await pinsModels.readMakePinPage(userId);
+  const makePinPage = await pinsModels.readBoardWithUser(userId);
 
   return makePinPage;
 }
