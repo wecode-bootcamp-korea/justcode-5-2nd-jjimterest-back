@@ -6,6 +6,7 @@ import recentSearchRouter from './recent-search.js';
 import commentRouter from './comments.js';
 import followRouter from './follow-unfollow.js';
 import myPageRouter from './mypage.js';
+import chatRouter from './chat.js';
 
 const router = express.Router();
 router.use(userRouter);
@@ -15,5 +16,6 @@ router.use(recentSearchRouter);
 router.use(commentRouter);
 router.use(followRouter);
 router.use(myPageRouter);
+router.use(chatRouter);
 
 export default router;

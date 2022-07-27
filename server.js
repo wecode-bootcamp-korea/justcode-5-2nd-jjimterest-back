@@ -4,13 +4,16 @@ import dotenv from 'dotenv';
 import http from 'http';
 import express from 'express';
 import routes from './routes/index.js';
-
+import socketConfig from './connection/socket.js';
 dotenv.config();
 const corsOption = {
   origin: '*',
 };
 const app = express();
 const server = http.createServer(app);
+
+socketConfig.init(server);
+
 app.use(express.static('uploads'));
 app.use(cors(corsOption));
 app.use(morgan('dev'));

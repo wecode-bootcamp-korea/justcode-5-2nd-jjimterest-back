@@ -13,7 +13,7 @@ export const deleteBoard = async (userId, boardId) => {
   }
   if (board.user_id !== userId) {
     const error = new Error('해당 보드를 삭제할 권한이 없습니다.');
-    error.statusCod = 400;
+    error.statusCod = 403;
     throw error;
   }
 
@@ -30,7 +30,7 @@ export const updateBoard = async (userId, info) => {
   }
   if (board.user_id !== userId) {
     const error = new Error('해당 보드를 수정할 권한이 없습니다.');
-    error.statusCod = 400;
+    error.statusCod = 403;
     throw error;
   }
   if (!title) {
@@ -73,7 +73,7 @@ export const mergeBoard = async (oldBoardId, newBoardId, userId) => {
   }
   if (check.user_id !== userId) {
     const error = new Error('해당 보드에 병합 할 권한이 없습니다.');
-    error.statusCode = 400;
+    error.statusCode = 403;
     throw error;
   }
   return await boardRepository.updateBoardStoreById(oldBoardId, newBoardId);

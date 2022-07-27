@@ -17,7 +17,7 @@ export const createComment = async (userId, parentId, pinId, content) => {
 };
 
 export const updateComment = async (userId, commentId, content) => {
-  const comment = await commentsRepository.readCommentsById(commentId);
+  const comment = await commentsRepository.readCommentById(commentId);
   if (!Boolean(comment.length)) {
     const error = new Error('해당 댓글이 존재하지 않습니다.');
     error.statusCode = 404;
@@ -25,7 +25,7 @@ export const updateComment = async (userId, commentId, content) => {
   }
   if (userId !== comment[0].user_id) {
     const error = new Error('해당 댓글을 수정할 권한이 없습니다.');
-    error.statusCode = 400;
+    error.statusCode = 403;
     throw error;
   }
 
@@ -33,7 +33,7 @@ export const updateComment = async (userId, commentId, content) => {
 };
 
 export const deleteComment = async (userId, commentId) => {
-  const comment = await commentsRepository.readCommentsById(commentId);
+  const comment = await commentsRepository.readCommentById(commentId);
   if (!Boolean(comment.length)) {
     const error = new Error('해당 댓글이 존재하지 않습니다.');
     error.statusCode = 404;
@@ -41,7 +41,7 @@ export const deleteComment = async (userId, commentId) => {
   }
   if (userId !== comment[0].user_id) {
     const error = new Error('해당 댓글을 삭제할 권한이 없습니다.');
-    error.statusCode = 400;
+    error.statusCode = 403;
     throw error;
   }
 
@@ -49,7 +49,7 @@ export const deleteComment = async (userId, commentId) => {
 };
 
 export const likeComment = async (userId, commentId) => {
-  const comment = await commentsRepository.readCommentsById(commentId);
+  const comment = await commentsRepository.readCommentById(commentId);
   if (!Boolean(comment.length)) {
     const error = new Error('해당 댓글이 존재하지 않습니다.');
     error.statusCode = 404;
@@ -69,8 +69,8 @@ export const likeComment = async (userId, commentId) => {
       !checkLike[0].isLike
     );
   }
-  const isLike = await commentsRepository.getIsLike(userId, commentId);
-  const likeCount = await commentsRepository.getCountofCommentLike(commentId);
+  const [isLike] = await commentsRepository.getIsLike(userId, commentId);
+  const [likeCount] = await commentsRepository.getCountofCommentLike(commentId);
 
-  return [isLike[0].isLike, likeCount[0].like_count];
+  return [isLike.isLike, likeCount.like_count];
 };
