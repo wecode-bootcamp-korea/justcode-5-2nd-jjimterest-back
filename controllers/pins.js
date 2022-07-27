@@ -53,7 +53,15 @@ export const organizePins = async (req, res) => {
     const pinId = req.body.pin_id;
     const boardId = req.body.board_id;
 
-    await pinsService.organizePins(userId, pinId, boardId);
+    //console.log('userId', userId);
+    //console.log('pinId', pinId);
+
+    for (var i = 0; i < pinId.length; i++) {
+      //console.log(pinId[i]);
+      await pinsService.organizePins(userId, pinId[i], boardId);
+    }
+
+    //await pinsService.organizePins(userId, pinId, boardId);
     res.status(201).json({ message: 'SUCCESS' });
   } catch (error) {
     res.status(error.statusCode || 500).json({ message: error.message });
