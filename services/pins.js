@@ -40,9 +40,6 @@ export const savePin = async (pinId, userId) => {
 };
 
 export async function organizePins(userId, pinId, boardId) {
-  /*console.log('userId', userId);
-  console.log('pinId', pinId);
-  console.log('boardId', boardId);*/
   await pinsModels.organizePins(userId, pinId, boardId);
 }
 
