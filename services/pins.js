@@ -46,6 +46,10 @@ export async function organizePins(userId, pinId, boardId) {
 export async function readMakePinPage(userId) {
   const makePinPage = await pinsModels.readBoardWithUser(userId);
 
+  if (makePinPage[0].boards[0].title === null) {
+    makePinPage[0].boards.splice(0, 1);
+  }
+
   return makePinPage;
 }
 
