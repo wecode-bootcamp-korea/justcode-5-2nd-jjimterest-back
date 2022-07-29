@@ -1,8 +1,9 @@
 import express from 'express';
 import * as pinsController from '../controllers/pins.js';
 import { isLogin } from '../middleware/auth.js';
-import multer from 'multer';
-import path from 'path';
+//import multer from 'multer';
+//import path from 'path';
+import upload from '../middleware/multer.js';
 import fs from 'fs';
 
 const router = express.Router();
@@ -14,6 +15,7 @@ try {
   fs.mkdirSync('uploads');
 }
 
+/*
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
@@ -24,7 +26,7 @@ const upload = multer({
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
-});
+});*/
 
 router.use(isLogin);
 
