@@ -72,13 +72,13 @@ ${
     : ``
 }
 FROM users
-LEFT JOIN (SELECT followee_id, JSON_ARRAYAGG(JSON_OBJECT('id',followings.follower_id,'profile_image',users.profile_image,'nickname',users.nickname)) following
+LEFT JOIN (SELECT followee_id, JSON_ARRAYAGG(JSON_OBJECT('id',followings.follower_id,'profile_image',users.profile_image,'nickname',users.nickname,'name',users.name)) following
       FROM followings JOIN users ON followings.follower_id = users.id
     WHERE followee_id=${
       otherUserId ? otherUserId : userId
     } GROUP BY followee_id) followee
 ON users.id = followee.followee_id
-LEFT JOIN (SELECT follower_id, JSON_ARRAYAGG(JSON_OBJECT('id',followings.followee_id,'profile_image',users.profile_image,'nickname',users.nickname)) follower
+LEFT JOIN (SELECT follower_id, JSON_ARRAYAGG(JSON_OBJECT('id',followings.followee_id,'profile_image',users.profile_image,'nickname',users.nickname,'name',users.name)) follower
       FROM followings JOIN users ON followings.followee_id = users.id
     WHERE follower_id=${
       otherUserId ? otherUserId : userId
