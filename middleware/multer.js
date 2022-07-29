@@ -16,6 +16,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'jjimterest-ji',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: function (req, file, cb) {
       cb(
@@ -29,5 +30,32 @@ const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+
+/*
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'jjimterest-ji',
+    acl: 'public-read',
+    key: function (req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});*/
+
+/*
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+});*/
 
 export default upload;
