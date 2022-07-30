@@ -68,6 +68,12 @@ export async function createPin(
     throw error;
   }
 
+  if (!boardId) {
+    const error = new Error('보드를 선택 해주세요.');
+    error.statusCode = 400;
+    throw error;
+  }
+
   const result = await pinsModels.createPin(
     userId,
     title,
