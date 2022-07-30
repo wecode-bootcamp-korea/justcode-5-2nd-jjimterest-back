@@ -40,7 +40,31 @@ export const savePin = async (pinId, userId) => {
 };
 
 export async function organizePins(userId, pinId, boardId) {
-  await pinsModels.organizePins(userId, pinId, boardId);
+  if (boardId) {
+    if (Array.isArray(pinId) === false) {
+      let arr = [];
+      arr.push(pinId);
+
+      for (var i = 0; i < arr.length; i++) {
+        await pinsModels.organizePins(userId, arr[i], boardId);
+      }
+    } else {
+      for (var i = 0; i < pinId.length; i++) {
+        await pinsModels.organizePins(userId, pinId[i], boardId);
+      }
+    }
+  } else {
+    const error = new Error('보드를 선택해주세요.');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  /*
+  for (var i = 0; i < arr.length; i++) {
+    await pinsModels.organizePins(userId, arr[i], boardId);
+  }*/
+
+  //await pinsModels.organizePins(userId, pinId, boardId);
 }
 
 export async function readMakePinPage(userId) {
