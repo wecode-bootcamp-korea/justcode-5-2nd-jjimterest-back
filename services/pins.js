@@ -40,7 +40,29 @@ export const savePin = async (pinId, userId) => {
 };
 
 export async function organizePins(userId, pinId, boardId) {
-  await pinsModels.organizePins(userId, pinId, boardId);
+  console.log('!!!', Array.isArray(pinId));
+  console.log('오잉', Array.isArray(pinId) === false);
+  console.log('응?', typeof pinId);
+
+  if (Array.isArray(pinId) === false) {
+    let arr = [];
+    arr.push(pinId);
+
+    for (var i = 0; i < arr.length; i++) {
+      await pinsModels.organizePins(userId, arr[i], boardId);
+    }
+  } else {
+    for (var i = 0; i < pinId.length; i++) {
+      await pinsModels.organizePins(userId, pinId[i], boardId);
+    }
+  }
+
+  /*
+  for (var i = 0; i < arr.length; i++) {
+    await pinsModels.organizePins(userId, arr[i], boardId);
+  }*/
+
+  //await pinsModels.organizePins(userId, pinId, boardId);
 }
 
 export async function readMakePinPage(userId) {
