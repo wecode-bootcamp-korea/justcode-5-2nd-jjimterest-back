@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer(app);
 app.use(express.static('uploads'));
 app.use(cors(corsOption));
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(routes);
 
